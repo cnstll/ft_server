@@ -1,15 +1,8 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Dockerfile                                         :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: calle <calle@student.42.fr>                +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/01/27 17:41:01 by calle             #+#    #+#              #
-#    Updated: 2021/01/27 18:06:12 by calle            ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 FROM debian:buster
-RUN apt-get install -y nginx
+RUN apt-get update -yq \
+&& apt-get install nginx openssl -y \
+&& apt-get install php7.3 php-mysql php7.3-fpm\
+&& apt-get install -y mariadb-server mariadb-client
+
+EXPOSE 80
 
