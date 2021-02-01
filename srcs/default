@@ -3,15 +3,15 @@ server {
 	listen [::]:80;
 
 	# SSL configuration
-	listen 443 ssl;
-	listen [::]:443 ssl;
+#	listen 443 ssl;
+#	listen [::]:443 ssl;
 
-	root /var/www/ft_server;
+	root /var/www/localhost;
 
     # Add index.php to the list if you are using PHP
     index index.html index.htm index.nginx-debian.html;
-	
-	server_name _;
+
+	server_name localhost;
 
 	location / {
 		# First attempt to serve request as file, then
@@ -20,12 +20,12 @@ server {
 	}
     # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
     #
-    #location ~ \.php$ {
+    location ~ \.php$ {
     #       include snippets/fastcgi-php.conf;
     #
     #       # With php7.0-cgi alone:
-    #       fastcgi_pass 127.0.0.1:9000;
+    #       #fastcgi_pass 127.0.0.1:9000;
     #       # With php7.0-fpm:
-    #       fastcgi_pass unix:/run/php/php7.0-fpm.sock;
-    #}
+    #       fastcgi_pass unix:/var/run/php/php7.3-fpm.sock;
+    }
 }
