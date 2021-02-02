@@ -3,9 +3,12 @@ server {
 	listen [::]:80;
 
 	# SSL configuration
-#	listen 443 ssl;
-#	listen [::]:443 ssl;
+	listen 443 ssl;
+	listen [::]:443 ssl;
 
+	include snippets/self-signed.conf;
+	include snippets/ssl-params.conf;
+	
 	root /var/www/localhost;
     index index.php index.html index.htm index.nginx-debian.html;
 
@@ -23,4 +26,5 @@ server {
            	# With php7.0-fpm:
             fastcgi_pass unix:/var/run/php/php7.3-fpm.sock;
     }
+	return 302 https://$server_name$request_uri;
 }

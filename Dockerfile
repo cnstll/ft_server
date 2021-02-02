@@ -5,6 +5,7 @@ RUN apt-get update -y \
 && apt-get upgrade -y \
 && apt-get install -y wget \
 && apt-get install -y nginx \
+&& apt-get install -y ufw \
 && apt-get install -y openssl \
 && apt-get install -y php7.3 php-mysql php7.3-fpm \
 && apt-get install -y mariadb-server mariadb-client 
@@ -24,12 +25,14 @@ COPY srcs/wp-config.php /var/www/localhost/wordpress/
 COPY srcs/config.inc.php /var/www/localhost/phpmyadmin/
 COPY srcs/info.php /var/www/localhost/phpmyadmin/
 COPY srcs/default /etc/nginx/sites-available
+COPY srcs/self-signed.conf /etc/nginx/snippets/
+COPY srcs/ssl-params.conf /etc/nginx/snippets/
 COPY srcs/script.sh ./
 
 RUN chown -R www-data /var/www/localhost \
 && chmod -R 765  /var/www/localhost
 
 EXPOSE 80
-#EXPOSE 443
+EXPOSE 443
 
 CMD bash script.sh
