@@ -22,13 +22,13 @@
 
 // ** Réglages MySQL - Votre hébergeur doit vous fournir ces informations. ** //
 /** Nom de la base de données de WordPress. */
-define( 'DB_NAME', 'ft_server' );
+define( 'DB_NAME', 'localhost' );
 
 /** Utilisateur de la base de données MySQL. */
-define( 'DB_USER', 'calle' );
+define( 'DB_USER', 'test' );
 
 /** Mot de passe de la base de données MySQL. */
-define( 'DB_PASSWORD', 'calle' );
+define( 'DB_PASSWORD', 'test' );
 
 /** Adresse de l’hébergement MySQL. */
 define( 'DB_HOST', 'localhost' );

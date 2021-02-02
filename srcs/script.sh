@@ -1,9 +1,9 @@
 #!/bin/sh
-#service mysql start
-#echo "CREATE DATABASE example_database;" | mysql
-#echo "GRANT ALL ON example_database.* TO 'calle'@'localhost' IDENTIFIED BY 'admin' WITH GRANT OPTION;" | mysql
-#echo "FLUSH PRIVILEGES;" | mysql
-service nginx start
 service mysql start
-service php7.3-fpm
-sleep 300
+echo "CREATE DATABASE localhost;" | mysql
+echo "GRANT ALL ON localhost.* TO 'test'@'localhost' IDENTIFIED BY 'test' WITH GRANT OPTION;" | mysql
+echo "FLUSH PRIVILEGES;" | mysql
+service nginx restart
+service mysql restart
+service php7.3-fpm start
+sleep 10000

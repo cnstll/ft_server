@@ -1,30 +1,35 @@
 FROM debian:buster
 
+
 RUN apt-get update -y \
 && apt-get upgrade -y \
 && apt-get install -y wget \
 && apt-get install -y nginx \
-#&& apt-get install -y openssl \
-&& apt-get install -y php7.3 php-mysql php7.3-fpm 
-#&& apt-get install -y mariadb-server mariadb-client
-#&& wget -cO wordpress.tar.gz https://wordpress.org/latest.tar.gz \
-#&& tar -xzvf wordpress.tar.gz \
-#&& rm -rf wordpress.tar.gz \
-#&& wget -cO phpmyadmin.tar.gz https://files.phpmyadmin.net/phpMyAdmin/4.9.7/phpMyAdmin-4.9.7-all-languages.tar.gz \
-#&& tar -xzvf phpmyadmin.tar.gz \
-#&& rm -rf phpmyadmin.tar.gz
+&& apt-get install -y openssl \
+&& apt-get install -y php7.3 php-mysql php7.3-fpm \
+&& apt-get install -y mariadb-server mariadb-client 
 
-# COPY srcs/wp-config.php /wordpress
-# COPY srcs/config.inc.php /phpmyadmin
-# COPY srcs/info.php phpmyadmin
+RUN mkdir /var/www/localhost \
+&& wget -cO wordpress.tar.gz https://wordpress.org/latest.tar.gz \
+&& tar -xzvf wordpress.tar.gz \
+&& rm -rf wordpress.tar.gz \
+&& mv /wordpress /var/www/localhost/ \
+&& wget -cO phpmyadmin.tar.gz https://files.phpmyadmin.net/phpMyAdmin/4.9.7/phpMyAdmin-4.9.7-all-languages.tar.gz \
+&& tar -xzvf phpmyadmin.tar.gz \
+&& rm -rf phpmyadmin.tar.gz \
+&& mv /phpMyAdmin-4.9.7-all-languages /phpmyadmin \
+&& mv /phpmyadmin /var/www/localhost/ 
+
+COPY srcs/wp-config.php /var/www/localhost/wordpress/
+COPY srcs/config.inc.php /var/www/localhost/phpmyadmin/
+COPY srcs/info.php /var/www/localhost/phpmyadmin/
 COPY srcs/default /etc/nginx/sites-available
 COPY srcs/script.sh ./
 
-RUN mkdir /var/www/localhost \
-&& chown -R $USER:$USER /var/www/* \
-&& chmod -R 765  /var/www/*
+RUN chown -R www-data /var/www/localhost \
+&& chmod -R 765  /var/www/localhost
 
 EXPOSE 80
-EXPOSE 443
+#EXPOSE 443
 
 CMD bash script.sh
