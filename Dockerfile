@@ -35,4 +35,4 @@ RUN chown -R www-data /var/www/localhost \
 EXPOSE 80
 EXPOSE 443
 
-CMD bash script.sh
+#CMD bash script.sh
