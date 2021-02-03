@@ -1,36 +1,37 @@
 server {
 
-	# SSL configuration
+	listen 80;
+	listen [::]:80;
+
 	listen 443 ssl;
 	listen [::]:443 ssl;
 
 	include snippets/self-signed.conf;
 	include snippets/ssl-params.conf;
 
-	root /var/www/localhost;
-    index index.php index.html index.htm index.nginx-debian.html;
-
 	server_name localhost;
+	root /var/www/localhost;
+   	index index.php index.html index.htm index.nginx-debian.html;
+
+	location / 
+	{
+		try_files $uri $uri/ =404;
+		autoindex on;
+	}
+
+	location ~ \.php$ 
+	{
+		include snippets/fastcgi-php.conf;
+		fastcgi_pass unix:/var/run/php/php7.3-fpm.sock;
+   	}
 
 }
 
 server {
+    listen 80;
+    listen [::]:80;
 
-	listen 80;
-	listen [::]:80;
+    server_name localhost;
 
-	server_name localhost;
-	location / {
-		# First attempt to serve request as file, then
-        # as directory, then fall back to displaying a 404.
-		try_files $uri $uri/ =404;
-		autoindex on;
-	}
-    # pass the PHP scripts to FastCGI server
-    location ~ \.php$ {
-           include snippets/fastcgi-php.conf;
-           	# With php7.0-fpm:
-            fastcgi_pass unix:/var/run/php/php7.3-fpm.sock;
-    }
-	return 302 https://$server_name$request_uri;
+    return 301 https://$server_name$request_uri;
 }

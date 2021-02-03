@@ -5,7 +5,6 @@ RUN apt-get update -y \
 && apt-get upgrade -y \
 && apt-get install -y wget \
 && apt-get install -y nginx \
-&& apt-get install -y ufw \
 && apt-get install -y openssl \
 && apt-get install -y php7.3 php-mysql php7.3-fpm \
 && apt-get install -y mariadb-server mariadb-client 
@@ -35,4 +34,4 @@ RUN chown -R www-data /var/www/localhost \
 EXPOSE 80
 EXPOSE 443
 
-#CMD bash script.sh
+CMD bash script.sh
