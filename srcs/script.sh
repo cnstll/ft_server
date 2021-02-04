@@ -1,8 +1,9 @@
 #!/bin/sh
 
+# Switch autoindex off
 if [ $autoindex = "off" ]
 then
-    echo sed -i '19,19 s/^/#/' /etc/nginx/sites-available/default
+    sed -i '29,29 s/^/#/' /etc/nginx/sites-available/default
 fi
 
 # Creating SSL Certificate
@@ -19,5 +20,5 @@ echo "FLUSH PRIVILEGES;" | mysql
 service nginx restart
 service mysql restart
 service php7.3-fpm start
-sleep 10000
+sleep 1800
 
